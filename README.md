@@ -5,8 +5,9 @@
 3. Create a rootkit possibly using our proof of concept or try a different angle, in our final presentation we’d like to show off a program that can find sensitive information on a system and send it to a different system
 ---
 ## Technical Specifications
-Project will be written in C / bash
-Will need to learn how kernel modules work to add more to this section
+1. Project will be written in C / bash
+2. Will need to learn how kernel modules work to add more to this section
+
 ---
 ## Milestones
 1. Week 3 and 4, 2/16 - 3/2
