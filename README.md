@@ -27,6 +27,6 @@
 6. Week 11 and 12, 4/13 - 4/27
     1. Finish and cleanup whatever is left of project
     2. Documenting code, small bug fixes. getting ready for presentation
-
+---
 ## Project Collaborators
 Will Albers, Sayan Bhattacharjee, Ishan Shah (mentor), Ophir Sneh (mentor)
