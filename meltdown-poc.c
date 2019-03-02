@@ -43,10 +43,13 @@ int main() {
     void *clearer = calloc(8, 1024*1024); // 8 MB
 
 
-    void* task_size = ((((unsigned)&num) + 1 GB) / (1 GB)) GB; 
+    void* task_size = ((((unsigned long)&num) + 1 GB) / (1 GB)) GB; 
     printf("task: %p\n", task_size);
-    uint8_t kernel_memory = *(uint8_t*)task_size;
-    //printf("First thing in stack: %p\n", &first_thing_in_stack);
+    if (task_size == NULL) { return 33; }
+    uint8_t kernel_memory = *(uint8_t*)(task_size);
+  
+  
+//printf("First thing in stack: %p\n", &first_thing_in_stack);
     //printf("kernel memory: %p\n", huh);
     printf("kernel memory data: %d\n", (int)kernel_memory); 
     
