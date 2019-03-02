@@ -44,7 +44,6 @@ int main() {
     }
 
     // cache timing part
-//    struct timeval stop, start;
     struct timespec stop, start;
     int i;
     for (i=0; i<256; i++) {    
