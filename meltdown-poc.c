@@ -7,6 +7,48 @@
 #include <time.h>
 //if you read array much larger than the l3 cache it should clear everything except that array
 
+// using https://github.com/IAIK/meltdown/blob/master/libkdump/libkdump.c
+// function for getting number of clock cycles since boot
+static inline uint64_t rdtsc() {
+  uint64_t a = 0, d = 0;
+  asm volatile("mfence");
+#if defined(USE_RDTSCP) && defined(__x86_64__)
+  asm volatile("rdtscp" : "=a"(a), "=d"(d) :: "rcx");
+#elif defined(USE_RDTSCP) && defined(__i386__)
+  asm volatile("rdtscp" : "=A"(a), :: "ecx");
+#elif defined(__x86_64__)
+  asm volatile("rdtsc" : "=a"(a), "=d"(d));
+#elif defined(__i386__)
+  asm volatile("rdtsc" : "=A"(a));
+#endif
+  a = (d << 32) | a;
+  asm volatile("mfence");
+  return a;
+}
+
+// defining flush and memory access in low level code for 32 or 64 bit systems
+#if defined(__x86_64__)
+// ---------------------------------------------------------------------------
+static inline void maccess(void *p) {
+  asm volatile("movq (%0), %%rax\n" : : "c"(p) : "rax");
+}
+
+// ---------------------------------------------------------------------------
+static void flush(void *p) {
+  asm volatile("clflush 0(%0)\n" : : "c"(p) : "rax");
+}
+#else
+// ---------------------------------------------------------------------------
+static inline void maccess(void *p) {
+  asm volatile("movl (%0), %%eax\n" : : "c"(p) : "eax");
+}
+
+// ---------------------------------------------------------------------------
+static void flush(void *p) {
+  asm volatile("clflush 0(%0)\n" : : "c"(p) : "eax");
+}
+#endif
+
 #define GB *1073741824
 jmp_buf buf;
 uint8_t kernel_memory = 0;
