@@ -1,4 +1,5 @@
-obj-m += network_client.o keysniffer.o
+#obj-m += network_client.o keysniffer.o
+obj-m += combo.o
 
 modname := kisni
 
