@@ -1,0 +1,1 @@
+cmd_/home/sayan/Desktop/241-Security-Project/combo.ko := ld -r -m elf_i386 -T ./scripts/module-common.lds --build-id  -o /home/sayan/Desktop/241-Security-Project/combo.ko /home/sayan/Desktop/241-Security-Project/combo.o /home/sayan/Desktop/241-Security-Project/combo.mod.o

