@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
 	printf("x is %d\n", x);
 */
 
-
+	system("mountFolders.sh");
 	x = chroot(directory);
 	if (x == -1) {
 		perror("chroot");
