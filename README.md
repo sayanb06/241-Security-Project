@@ -1,4 +1,10 @@
 # 241-Security-Project
+# Downgrading Kernel
+1. Install Ukuu
+2. Install kernel version 4.3.0
+3. Restart computer while pressing ESC when the bios shows
+4. Go into Advanced Ubuntu Options
+5. Select right kernel version 
 ## Exact Tasks / Goals
 1. Learn about spectre, meltdown, and rootkits in depth	 
 2. Create meltdown proof of concept
