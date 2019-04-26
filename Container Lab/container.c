@@ -33,10 +33,7 @@ int main(int argc, char** argv) {
 	system("ps");
 	
 	char* directory = "newroot";
-	int permissionSize = 3;
-	mkdir(directory, (7 << (2* permissionSize)) 
-					| (7 << (1 * permissionSize)) 
-					| (7 << (0 * permissionSize)));
+	mkdir(directory, 700);
 
 	// unshare the namespace for the child
 	int x = unshare(CLONE_NEWPID | CLONE_NEWNS);
@@ -48,6 +45,8 @@ int main(int argc, char** argv) {
 	// First one works then error: "Cannot allocate memory" from the system call
 	// overlay mount
 	// lower is base
+	x = chdir("newroot");
+	printf("x is %d\n", x);
 /*
 	mkdir("bin_u", 700);
 	mkdir("bin", 700);
@@ -75,8 +74,7 @@ int main(int argc, char** argv) {
 	printf("x is %d\n", x);
 */
 
-	system("sudo ./mountFolders.sh");
-	
+
 	x = chroot(directory);
 	if (x == -1) {
 		perror("chroot");
@@ -84,17 +82,18 @@ int main(int argc, char** argv) {
 
 	
 	int child = fork();
-	if (child == -1) {perror(NULL);}
+
 	if (child == 0) {
 
 		printf("pid is %d\n", (int)getpid());
-
+		printf("uid is %d\n", (int)getuid());
 				
 
 		char buf[128];
 		char* idk = getcwd(&buf, 128); 
 		printf("idk is: %s\n", idk);
-		printf("buf is %s\n", buf);
+//		printf("buf is %s\n", buf);
+
 
 		//x = system("ls bin");
 		//printf("x is %d\n", x);
@@ -115,12 +114,12 @@ int main(int argc, char** argv) {
 		}
 */
 		//sleep(20);
-		system("ls /");
+		//execlp("/bin/ls", "/bin/ls", NULL);
 
 
 		// prints everything
 		//execlp("/bin/ps", "/bin/ps", "aux", NULL);
-		system("ps");
+		
 
 	
 		// setup filesystem
