@@ -33,7 +33,10 @@ int main(int argc, char** argv) {
 	system("ps");
 	
 	char* directory = "newroot";
-	mkdir(directory, 700);
+	int permissionSize = 3;
+	mkdir(directory, (7 << (2* permissionSize)) 
+					| (7 << (1 * permissionSize)) 
+					| (7 << (0 * permissionSize)));
 
 	// unshare the namespace for the child
 	int x = unshare(CLONE_NEWPID | CLONE_NEWNS);
@@ -72,7 +75,8 @@ int main(int argc, char** argv) {
 	printf("x is %d\n", x);
 */
 
-	system("mountFolders.sh");
+	system("sudo ./mountFolders.sh");
+	
 	x = chroot(directory);
 	if (x == -1) {
 		perror("chroot");
@@ -80,7 +84,7 @@ int main(int argc, char** argv) {
 
 	
 	int child = fork();
-
+	if (child == -1) {perror(NULL);}
 	if (child == 0) {
 
 		printf("pid is %d\n", (int)getpid());
@@ -111,12 +115,12 @@ int main(int argc, char** argv) {
 		}
 */
 		//sleep(20);
-		//execlp("/bin/ls", "/bin/ls", NULL);
+		system("ls /");
 
 
 		// prints everything
 		//execlp("/bin/ps", "/bin/ps", "aux", NULL);
-		
+		system("ps");
 
 	
 		// setup filesystem
