@@ -1,6 +1,6 @@
 /**
- * Charming Chatroom
- * CS 241 - Spring 2019
+This better work.
+
  */
 #include <arpa/inet.h>
 #include <errno.h>
@@ -64,9 +64,10 @@ int main(int argc, char **argv) {
 	printf("Connection made: fd=%d\n", client_fd);
 
 
+	printf("Reading:\n");
 	char* buffer = calloc(1024, 1);
 	while (1) {
-		int bytes_read = read(client_fd, buffer, 1024);
+		int bytes_read = read(client_fd, buffer, 1);
 		if (bytes_read == -1) {
 			printf("error with read: %s\n", strerror(errno));
 		}
@@ -74,7 +75,7 @@ int main(int argc, char **argv) {
 			break;
 		}
 		//printf("bytes read: %d\n", bytes_read);
-		printf("Received: %s\n", buffer);
+		printf("%s", buffer);
 		memset(buffer, 0, 1024);
 	}
 
